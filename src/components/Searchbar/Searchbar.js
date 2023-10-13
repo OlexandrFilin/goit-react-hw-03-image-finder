@@ -4,23 +4,29 @@ import React, { Component } from 'react';
 
 export default class Searchbar extends Component {
   state = {
-    strigSarch: '',
+    stringSearch: '',
+  };
+  componentDidUpdate = () => {
+    this.props.changeStringSearch(this.state.stringSearch);
   };
   changeStrSearch = e => {
-    console.log('e :>> ', e);
-    console.log('e.currentTarget.value :>> ', e.currentTarget.value);
     this.setState({
-      strigSarch: e.currentTarget.value,
+      stringSearch: e.currentTarget.value,
     });
-    this.props.newStrSearch();
   };
   render() {
+    const { stringSearch } = this.state;
+    const { changeStrSearch } = this;
     return (
       <WrapSearch>
         <InpSearch
-          name="strigSarch"
-          placeholder="item search"
-          onClick={this.changeStrSearch}
+          type="text"
+          //autocomplete="off"
+          //   autofocus
+          value={stringSearch}
+          placeholder="Search images and photos"
+          name="stringSearch"
+          onChange={changeStrSearch}
         />
         ;
       </WrapSearch>

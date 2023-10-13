@@ -8,11 +8,12 @@ export const WrapSearch = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 64px;
+
   padding-right: 24px;
   padding-left: 24px;
   padding-top: 12px;
   padding-bottom: 12px;
+  margin-bottom: 16px;
   color: #fff;
   background-color: #3f51b5;
   box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
