@@ -1,11 +1,27 @@
 import { ImageGallery } from './ImageGallery/ImageGallery';
-import { SearchBar } from './Searchbar/Searchbar';
+import SearchBar from './Searchbar/Searchbar';
 
-export const App = () => {
-  return (
-    <div>
-      <SearchBar />
-      <ImageGallery />
-    </div>
-  );
-};
+import React, { Component } from 'react';
+
+export class App extends Component {
+  newStrSearch = newStr => {
+    console.log('newStr :>> ', newStr);
+  };
+  render() {
+    return (
+      <div>
+        <SearchBar changeStringSearch={this.newStrSearch} />
+        <ImageGallery stringSearch="" />
+      </div>
+    );
+  }
+}
+
+// getStringSearch =()=>{}
+//   return (
+//     <div>
+//       <SearchBar />
+//       <ImageGallery />
+//     </div>
+//   );
+// };
