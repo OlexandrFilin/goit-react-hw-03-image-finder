@@ -6,7 +6,7 @@ import {
 } from './ImageGallery.styled';
 import { fetchImages } from '../../getDataImage';
 import ImageGalleryItem from 'components/ImageGalleryItem/ImageGalleryItem';
-import { CirclesWithBar } from 'react-loader-spinner';
+import { spinerFunc } from '../Loader/Loader';
 
 export class ImageGallery extends Component {
   state = {
@@ -19,7 +19,6 @@ export class ImageGallery extends Component {
 
   per_page = 12;
   componentDidMount = () => {
-    console.log('mount :>> ');
     const {
       state: { lineForSearch, page },
       per_page,
@@ -29,6 +28,7 @@ export class ImageGallery extends Component {
       this.setState({
         spiner: true,
       });
+      //запит на бекенд при першому завантаженні сторінки
       fetchImages(lineForSearch, page, per_page).then(data => {
         this.setState({
           gallery: [...data.hits],
@@ -45,63 +45,37 @@ export class ImageGallery extends Component {
     }
   };
 
-  spiner = () => {
-    return (
-      <CirclesWithBar
-        height="100"
-        width="100"
-        color="#4fa94d"
-        wrapperStyle={{}}
-        wrapperClass=""
-        visible={true}
-        outerCircleColor=""
-        innerCircleColor=""
-        barColor=""
-        ariaLabel="circles-with-bar-loading"
-        justifyContent="center"
-      />
-    );
-  };
-
   componentDidUpdate = (prProps, prState) => {
-    console.log('update gallery');
-
     if (
       prState.lineForSearch !== this.props.stringSearch ||
       prState.page !== this.state.page
     ) {
-      console.log('Запуск оновлення');
-
       try {
+        //запит на бекенд при оновленні сторінки
         fetchImages(
           this.props.stringSearch,
           this.state.page,
           this.per_page
         ).then(data => {
-          //якщо рядки
+          //якщо елемент в стейті що містить рядок пошуку змінився обнуляємо стейнт
+
           if (prState.lineForSearch !== this.props.stringSearch) {
-            console.log('update1  ');
             this.setState({
               gallery: [...data.hits],
               lineForSearch: this.props.stringSearch,
               page: 1,
+              spiner: false,
             });
           } else {
+            //інакше додаємо до вже відрендерених каритнок ще порцію
             this.setState((prState, prProps) => {
-              const ar = { ...prState.gallery, ...data.hits };
-              console.log('update2  ');
-              console.log('ar :>> ', ar);
               return {
                 gallery: [...prState.gallery, ...data.hits],
                 lineForSearch: this.props.stringSearch,
+                spiner: false,
               };
             });
           }
-
-          // this.setState({
-          //   gallery: [...data.hits],
-          //   lineForSearch: this.props.stringSearch,
-          // });
         });
       } catch (error) {
         this.setState({
@@ -113,19 +87,15 @@ export class ImageGallery extends Component {
         // });
       }
     }
-
-    // console.log('this.state :>> ', this.state);
   };
 
-  getImages = () => {
-    // console.log('this.state.gallery :>> ', this.state.gallery);
+  getComponentImagesForRender = () => {
     return this.state.gallery.map(ImgItem => {
       return <ImageGalleryItem key={ImgItem.id} ImgItem={ImgItem} />;
     });
   };
 
   clickLoadMore = () => {
-    // console.log('clicButton :>> ');
     this.setState(prState => {
       return { page: prState.page + 1 };
     });
@@ -138,7 +108,10 @@ export class ImageGallery extends Component {
     if (!this.setState.error) {
       return (
         <div>
-          <WrapImageGallery>{this.getImages()}</WrapImageGallery>
+          {this.state.spiner && spinerFunc()}
+          <WrapImageGallery>
+            {this.getComponentImagesForRender()}
+          </WrapImageGallery>
           {this.state.gallery.length < 12 ? (
             <BtnWraper></BtnWraper>
           ) : (
@@ -148,7 +121,6 @@ export class ImageGallery extends Component {
               </BtnLoadMore>
             </BtnWraper>
           )}
-          {this.state.spiner && this.spiner()}
         </div>
       );
     } else {

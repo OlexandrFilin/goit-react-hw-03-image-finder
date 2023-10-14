@@ -7,18 +7,16 @@ export class App extends Component {
   state = {
     stringSearch: '',
   };
+  //Функція прокидується в SеarchBar При зміні рядка пошуку та сабміті
+  //в SеarchBar змінюємо стейт для нового рендеригку
   newStrSearch = newStr => {
     if (this.state.stringSearch !== newStr) {
-      console.log(' update state APP');
       this.setState({
         stringSearch: newStr,
       });
     }
   };
-  getNewSting = newStr => {
-    console.log('newStr :>> ', newStr);
-    return newStr;
-  };
+
   render() {
     return (
       <div>
