@@ -17,8 +17,6 @@ export const ModalWindow = props => {
   return (
     <Modal
       isOpen={props.showModal}
-      // isOpen={modalIsOpen}
-      // onAfterOpen={afterOpenModal}
       onRequestClose={props.onCloseModal}
       style={customStyles}
       contentLabel="Example Modal"

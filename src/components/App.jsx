@@ -9,7 +9,7 @@ export class App extends Component {
   };
   newStrSearch = newStr => {
     if (this.state.stringSearch !== newStr) {
-      console.log('update state APP');
+      console.log(' update state APP');
       this.setState({
         stringSearch: newStr,
       });

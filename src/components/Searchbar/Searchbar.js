@@ -7,7 +7,8 @@ import {
 } from './Searchbar.styled';
 
 import React, { Component } from 'react';
-
+import { AiOutlineKey } from 'react-icons/ai';
+//ехспортуэмо до App
 export default class Searchbar extends Component {
   state = {
     stringSearch: '',
@@ -15,7 +16,6 @@ export default class Searchbar extends Component {
 
   submitForm = evt => {
     evt.preventDefault();
-
     this.props.changeStringSearch(this.state.stringSearch);
   };
   changeStrSearch = e => {
@@ -31,6 +31,7 @@ export default class Searchbar extends Component {
       <SearchbarHed>
         <SearchForm onSubmit={this.submitForm}>
           <SearchFormButton type="submit">
+            <AiOutlineKey size={32} />
             <SearchFormButtonLabel>Search</SearchFormButtonLabel>
           </SearchFormButton>
 

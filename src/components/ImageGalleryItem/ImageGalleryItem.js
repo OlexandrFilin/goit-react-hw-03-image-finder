@@ -25,7 +25,6 @@ export default class ImageGalleryItem extends Component {
           height="200"
           src={`${this.props.ImgItem.webformatURL}`}
           alt={`${this.props.ImgItem.tags}`}
-          key={`${this.props.id}`}
           loading="lazy"
           onClick={this.onOpenModal}
         />
