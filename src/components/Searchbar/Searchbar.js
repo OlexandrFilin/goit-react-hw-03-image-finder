@@ -1,4 +1,10 @@
-import { InpSearch, WrapSearch } from './Searchbar.styled';
+import {
+  SearchbarHed,
+  SearchForm,
+  SearchFormButton,
+  SearchFormButtonLabel,
+  SearchFormInput,
+} from './Searchbar.styled';
 
 import React, { Component } from 'react';
 
@@ -6,7 +12,10 @@ export default class Searchbar extends Component {
   state = {
     stringSearch: '',
   };
-  componentDidUpdate = () => {
+
+  submitForm = evt => {
+    evt.preventDefault();
+
     this.props.changeStringSearch(this.state.stringSearch);
   };
   changeStrSearch = e => {
@@ -14,22 +23,29 @@ export default class Searchbar extends Component {
       stringSearch: e.currentTarget.value,
     });
   };
+
   render() {
     const { stringSearch } = this.state;
     const { changeStrSearch } = this;
     return (
-      <WrapSearch>
-        <InpSearch
-          type="text"
-          //autocomplete="off"
-          //   autofocus
-          value={stringSearch}
-          placeholder="Search images and photos"
-          name="stringSearch"
-          onChange={changeStrSearch}
-        />
-        ;
-      </WrapSearch>
+      <SearchbarHed>
+        <SearchForm onSubmit={this.submitForm}>
+          <SearchFormButton type="submit">
+            <SearchFormButtonLabel>Search</SearchFormButtonLabel>
+          </SearchFormButton>
+
+          <SearchFormInput
+            className="input"
+            type="text"
+            autoComplete="off"
+            autoFocus
+            placeholder="Search images and photos"
+            value={stringSearch}
+            name="stringSearch"
+            onChange={changeStrSearch}
+          />
+        </SearchForm>
+      </SearchbarHed>
     );
   }
 }
