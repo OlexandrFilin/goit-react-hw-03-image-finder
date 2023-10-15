@@ -43,3 +43,7 @@ export const BtnWraper = styled.div`
   margin-top: 16px;
   text-align: center;
 `;
+
+export const MessageNoResult = styled.h2`
+  text-align: center;
+`;
