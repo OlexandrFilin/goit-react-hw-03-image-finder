@@ -13,7 +13,7 @@ export class App extends Component {
   };
   per_page = 12;
   spiner = true;
-  totalHits = 0;
+  loadImg = 0;
   //Функція прокидується в SеarchBar При зміні рядка пошуку та сабміті
   //в SеarchBar змінюємо стейт для нового рендеригку
   newStrSearch = newStr => {
@@ -66,7 +66,8 @@ export class App extends Component {
           this.state.page,
           this.per_page
         ).then(data => {
-          console.log('data :>> ', data);
+          this.loadImg = data.hits.length;
+
           if (this.state.page === 1) {
             this.setState({
               gallery: [...data.hits],
@@ -98,10 +99,11 @@ export class App extends Component {
     });
   };
   RendrButtonLoadMore = () => {
-    if (this.state.gallery.length < 24) {
-      return true;
-    } else {
+    console.log('this.loadImg :>> ', this.loadImg);
+    if (this.loadImg < 12) {
       return false;
+    } else {
+      return true;
     }
   };
 

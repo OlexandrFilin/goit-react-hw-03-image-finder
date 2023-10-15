@@ -21,7 +21,7 @@ export default class Searchbar extends Component {
   // для контрольованого вводу
   changeStrSearch = e => {
     this.setState({
-      stringSearch: e.currentTarget.value,
+      stringSearch: e.target.value,
     });
   };
 
