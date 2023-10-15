@@ -35,6 +35,7 @@ export class ImageGallery extends Component {
       return <h2>Помилка запиту</h2>;
     }
     if (spiner) {
+      console.log('отображаем спинер');
       return (
         <div>
           {spinerFunc()}
@@ -42,25 +43,16 @@ export class ImageGallery extends Component {
             {this.getComponentImagesForRender()}
           </WrapImageGallery>
           {this.renderButon(loadMore)}
-          {/* <BtnWraper>
-            <BtnLoadMore type="button" onClick={this.props.onLoadMore}>
-              Load more
-            </BtnLoadMore>
-          </BtnWraper> */}
         </div>
       );
     } else {
+      console.log('не отображаем спинер');
       return (
         <div>
           <WrapImageGallery>
             {this.getComponentImagesForRender()}
           </WrapImageGallery>
           {this.renderButon(loadMore)}
-          {/* <BtnWraper>
-            <BtnLoadMore type="button" onClick={this.props.onLoadMore}>
-              Load more
-            </BtnLoadMore>
-          </BtnWraper> */}
         </div>
       );
     }

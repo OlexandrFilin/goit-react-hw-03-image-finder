@@ -12,7 +12,7 @@ export class App extends Component {
     spiner: true,
   };
   per_page = 12;
-  spiner = true;
+  spiner = false;
   loadImg = 0;
   //Функція прокидується в SеarchBar При зміні рядка пошуку та сабміті
   //в SеarchBar змінюємо стейт для нового рендеригку
@@ -43,23 +43,27 @@ export class App extends Component {
     // console.log('');
     // console.log('prState.stringSearch :>> ', prState.stringSearch);
     // console.log('this.state.stringSearch  :>> ', this.state.stringSearch);
+    console.log('prState.spiner :>> ', prState.spiner);
+    console.log('this.state.spiner :>> ', this.state.spiner);
 
     try {
+      if (prState.stringSearch !== this.state.stringSearch) {
+        this.setState({
+          page: 1,
+        });
+      }
       if (
         prState.stringSearch !== this.state.stringSearch ||
         prState.page !== this.state.page ||
         prState.error !== this.state.error
+        // prState.spiner !== this.state.spiner
       ) {
         // console.log('qwery bekend');
         this.setState({
           spiner: true,
         });
         //     //якщо змінився рядко пошуку починаємо перегляд наступних картинок з 1 сторінки
-        if (prState.stringSearch !== this.state.stringSearch) {
-          this.setState({
-            page: 1,
-          });
-        }
+
         //     //запит на бекенд при оновленні сторінки
         fetchImages(
           this.state.stringSearch,
@@ -69,17 +73,25 @@ export class App extends Component {
           this.loadImg = data.hits.length;
 
           if (this.state.page === 1) {
+            console.log('спинер 1 фалсе');
             this.setState({
               gallery: [...data.hits],
-              // stringSearch: this.state.stringSearch,
-              //page: 1,
-              // spiner: false,
+              spiner: false,
+            });
+
+            this.setState({
+              spiner: false,
             });
           } else {
             this.setState(() => {
               return {
                 gallery: [...prState.gallery, ...data.hits],
               };
+            });
+
+            console.log('спинер 2 фалсе');
+            this.setState({
+              spiner: false,
             });
           }
         });
@@ -89,7 +101,12 @@ export class App extends Component {
         error: true,
       });
     } finally {
-      this.spiner = false;
+      //console.log('close spiner :>> ');
+      // setTimeout(() => {
+      // this.setState({
+      //   spiner: false,
+      // });
+      // }, 1000);
     }
   };
 
@@ -99,7 +116,7 @@ export class App extends Component {
     });
   };
   RendrButtonLoadMore = () => {
-    console.log('this.loadImg :>> ', this.loadImg);
+    // console.log('this.loadImg :>> ', this.loadImg);
     if (this.loadImg < 12) {
       return false;
     } else {
@@ -109,7 +126,7 @@ export class App extends Component {
 
   render() {
     const { onSubmitForm, onLoadMore, RendrButtonLoadMore } = this;
-
+    console.log('рендер Арр');
     return (
       <div>
         <SearchBar onSubmitForm={onSubmitForm} />

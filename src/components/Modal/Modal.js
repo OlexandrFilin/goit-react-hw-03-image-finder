@@ -21,13 +21,9 @@ export const ModalWindow = props => {
       style={customStyles}
       contentLabel="Example Modal"
     >
-      <Overlay>
+      <Overlay onClick={props.onCloseModal}>
         <ModalWin>
-          <img
-            src={props.image}
-            alt={props.tags}
-            onClick={props.onCloseModal}
-          />
+          <img src={props.image} alt={props.tags} />
         </ModalWin>
       </Overlay>
     </Modal>
