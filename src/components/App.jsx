@@ -17,7 +17,6 @@ export class App extends Component {
   //Функція прокидується в SеarchBar При зміні рядка пошуку та сабміті
   //в SеarchBar змінюємо стейт для нового рендеригку
   newStrSearch = newStr => {
-    console.log('newStr :>> ', newStr);
     if (this.state.stringSearch !== newStr) {
       this.setState({
         stringSearch: newStr,
@@ -35,22 +34,21 @@ export class App extends Component {
   };
 
   componentDidUpdate = (prProps, prState) => {
-    if (
-      prState.stringSearch !== this.state.stringSearch ||
-      prState.page !== this.state.page
-    ) {
+    const {
+      state: { stringSearch, page },
+    } = this;
+    if (prState.stringSearch !== stringSearch || prState.page !== page) {
       this.setState({
         spiner: true,
       });
 
       try {
-        fetchImages(this.state.stringSearch, this.state.page).then(data => {
-          this.loadImg = data.hits.length;
+        fetchImages(stringSearch, page).then(data => {
           const totalHits = data.totalHits;
           this.setState(prState => {
             return {
               gallery: [...prState.gallery, ...data.hits],
-              loadMore: this.state.page < Math.ceil(totalHits / 12),
+              loadMore: page < Math.ceil(totalHits / 12),
             };
           });
         });
