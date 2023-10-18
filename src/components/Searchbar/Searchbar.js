@@ -13,11 +13,12 @@ export default class Searchbar extends Component {
   state = {
     stringSearch: '',
   };
-  // // для організації пошуку міняєму в стейті рядок для пошуку
-  // submitForm = evt => {
-  //   evt.preventDefault();
-  //   this.props.changeStringSearch(this.state.stringSearch);
-  // };
+  // для організації пошуку міняєму в стейті рядок для пошуку
+  submitForm = evt => {
+    evt.preventDefault();
+    this.props.onSubmitForm(this.state.stringSearch);
+  };
+
   // для контрольованого вводу
   changeStrSearch = e => {
     this.setState({
@@ -27,11 +28,11 @@ export default class Searchbar extends Component {
 
   render() {
     const { stringSearch } = this.state;
-    const { changeStrSearch } = this;
+    const { changeStrSearch, submitForm } = this;
 
     return (
       <SearchbarHed>
-        <SearchForm onSubmit={this.props.onSubmitForm}>
+        <SearchForm onSubmit={submitForm}>
           {/* кнопка пошуку */}
           <SearchFormButton type="submit">
             {/* іконка */}

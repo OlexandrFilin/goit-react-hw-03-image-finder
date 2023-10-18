@@ -14,22 +14,13 @@ export class App extends Component {
   };
 
   loadImg = 0;
-  //Функція прокидується в SеarchBar При зміні рядка пошуку та сабміті
-  //в SеarchBar змінюємо стейт для нового рендеригку
-  newStrSearch = newStr => {
-    if (this.state.stringSearch !== newStr) {
-      this.setState({
-        stringSearch: newStr,
-      });
-    }
-  };
-  // для організації пошуку міняєму в стейті рядок для пошуку
-  onSubmitForm = evt => {
-    evt.preventDefault();
 
+  // для організації пошуку міняєму в стейті рядок для пошуку
+  onSubmitForm = newStr => {
     this.setState({
-      stringSearch: evt.target.stringSearch.value,
+      stringSearch: newStr,
       page: 1,
+      gallery: [],
     });
   };
 
